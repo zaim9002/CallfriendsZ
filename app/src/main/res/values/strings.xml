@@ -1,0 +1,215 @@
+<resources>
+    <string name="app_name">CallfriendsZ</string>
+    <string name="tagline">Secure HD Video Meetings &amp; Calling</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_calls">Calls</string>
+    <string name="nav_meetings">Meetings</string>
+    <string name="nav_contacts">Contacts</string>
+    <string name="nav_profile">Profile</string>
+
+    <!-- Home Screen -->
+    <string name="start_new_meeting">Start a New Meeting</string>
+    <string name="new_meeting">New Meeting</string>
+    <string name="join_with_code">Join with Code</string>
+    <string name="schedule_meeting">Schedule Meeting</string>
+    <string name="upcoming_meetings">Upcoming Meetings</string>
+    <string name="recent_meetings">Recent Meetings</string>
+    <string name="no_upcoming_meetings">No upcoming meetings scheduled</string>
+    <string name="no_recent_meetings">No recent meetings yet</string>
+    <string name="join">Join</string>
+    <string name="rejoin">Rejoin</string>
+    <string name="host">Host</string>
+    <string name="participants_count">%1$d participants</string>
+
+    <!-- Create Meeting -->
+    <string name="create_meeting_title">Create New Meeting</string>
+    <string name="meeting_name_hint">Meeting Name (e.g. Design Sync)</string>
+    <string name="meeting_desc_hint">Description (optional)</string>
+    <string name="meeting_type">Meeting Access Type</string>
+    <string name="access_anyone">Anyone with link can join</string>
+    <string name="access_ask">Ask host to join (Waiting Room)</string>
+    <string name="access_invited">Only invited users</string>
+    <string name="meeting_id">Meeting ID</string>
+    <string name="meeting_password">Password (Optional)</string>
+    <string name="meeting_password_hint">Enter meeting passcode</string>
+    <string name="permission_rules">Meeting Permissions</string>
+    <string name="allow_quick_join">Allow quick join without preview</string>
+    <string name="allow_guest_users">Allow guest / anonymous users</string>
+    <string name="allow_chat">Enable meeting chat</string>
+    <string name="allow_screen_share">Enable screen sharing</string>
+    <string name="allow_recording">Allow cloud recording</string>
+    <string name="allow_camera">Allow participants camera</string>
+    <string name="allow_mic">Allow participants microphone</string>
+    <string name="btn_create_meeting">Create &amp; Get Link</string>
+    <string name="meeting_ready">Your meeting is ready!</string>
+    <string name="copy_link">Copy Link</string>
+    <string name="link_copied">Meeting link copied to clipboard</string>
+    <string name="share_link">Share Link</string>
+    <string name="start_meeting">Start Meeting Now</string>
+
+    <!-- Join Screen & Preview -->
+    <string name="join_meeting_title">Join a Meeting</string>
+    <string name="enter_code_hint">Enter Meeting Code or Link</string>
+    <string name="enter_password_hint">Enter Passcode if required</string>
+    <string name="preview_title">Meeting Preview</string>
+    <string name="your_name">Your Name</string>
+    <string name="name_hint">Enter your display name</string>
+    <string name="test_audio">Test Audio</string>
+    <string name="audio_route">Audio Route</string>
+    <string name="route_speaker">Speaker</string>
+    <string name="route_earpiece">Earpiece</string>
+    <string name="route_bluetooth">Bluetooth</string>
+    <string name="route_wired">Wired Headset</string>
+    <string name="ready_to_join">Ready to join?</string>
+    <string name="join_now">Join Now</string>
+
+    <!-- Meeting Active Screen -->
+    <string name="meeting_duration">Duration</string>
+    <string name="leave_meeting">Leave Meeting</string>
+    <string name="end_for_all">End for Everyone</string>
+    <string name="confirm_end_all_title">End meeting for everyone?</string>
+    <string name="confirm_end_all_desc">All participants will be disconnected immediately.</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Controls -->
+    <string name="control_mic">Mic</string>
+    <string name="control_camera">Camera</string>
+    <string name="control_switch_camera">Flip</string>
+    <string name="control_audio">Audio</string>
+    <string name="control_share_screen">Share Screen</string>
+    <string name="control_stop_share">Stop Sharing</string>
+    <string name="control_chat">Chat</string>
+    <string name="control_participants">People</string>
+    <string name="control_reactions">React</string>
+    <string name="control_raise_hand">Raise Hand</string>
+    <string name="control_lower_hand">Lower Hand</string>
+    <string name="control_more">More</string>
+
+    <!-- Network & Quality -->
+    <string name="net_excellent">HD • Excellent</string>
+    <string name="net_good">Good Connection</string>
+    <string name="net_poor">Unstable Network</string>
+    <string name="net_reconnecting">Reconnecting…</string>
+    <string name="stats_rtt">RTT: %1$d ms</string>
+    <string name="stats_packet_loss">Loss: %1$.1f%%</string>
+    <string name="stats_bitrate">Bitrate: %1$d kbps</string>
+
+    <!-- Layouts -->
+    <string name="layout_grid">Grid</string>
+    <string name="layout_speaker">Speaker</string>
+    <string name="layout_spotlight">Spotlight</string>
+    <string name="layout_pip">PiP Mode</string>
+
+    <!-- Waiting Room -->
+    <string name="waiting_room_title">Waiting Room</string>
+    <string name="waiting_room_msg">Waiting for the host to let you in…</string>
+    <string name="waiting_requests_title">Join Requests</string>
+    <string name="btn_admit">Admit</string>
+    <string name="btn_deny">Deny</string>
+
+    <!-- Chat & Files -->
+    <string name="chat_title">In-call Messages</string>
+    <string name="chat_input_hint">Send a message to everyone…</string>
+    <string name="send">Send</string>
+    <string name="reply">Reply</string>
+    <string name="delete">Delete</string>
+    <string name="file_uploading">Uploading %1$s…</string>
+    <string name="file_completed">File shared</string>
+    <string name="file_failed">Upload failed</string>
+    <string name="attach_file">Attach File</string>
+
+    <!-- Participants & Host Controls -->
+    <string name="participants_title">Participants (%1$d)</string>
+    <string name="host_controls_title">Host Controls</string>
+    <string name="lock_meeting">Lock Meeting</string>
+    <string name="lock_meeting_desc">No new participants can join</string>
+    <string name="allow_unmute">Allow participants to unmute</string>
+    <string name="allow_camera_sharing">Allow participants video</string>
+    <string name="mute_all">Mute Everyone</string>
+    <string name="mute_participant">Mute</string>
+    <string name="remove_participant">Remove</string>
+    <string name="make_cohost">Make Co-host</string>
+
+    <!-- Calls & Contacts -->
+    <string name="calls_title">Calls</string>
+    <string name="call_incoming">Incoming Call</string>
+    <string name="call_outgoing">Outgoing Call</string>
+    <string name="call_missed">Missed Call</string>
+    <string name="new_call">New Call</string>
+    <string name="search_hint">Search people, meetings…</string>
+    <string name="audio_call">Audio Call</string>
+    <string name="video_call">Video Call</string>
+
+    <!-- Schedule & Calendar -->
+    <string name="schedule_title">Schedule Meeting</string>
+    <string name="meeting_date">Date</string>
+    <string name="meeting_start_time">Start Time</string>
+    <string name="meeting_end_time">End Time</string>
+    <string name="repeat_label">Repeat</string>
+    <string name="repeat_never">Never</string>
+    <string name="repeat_daily">Daily</string>
+    <string name="repeat_weekly">Weekly</string>
+    <string name="reminder_label">Notification Reminder</string>
+    <string name="reminder_10m">10 minutes before</string>
+    <string name="calendar_today">Today</string>
+    <string name="calendar_tomorrow">Tomorrow</string>
+    <string name="calendar_upcoming">Upcoming</string>
+
+    <!-- Profile & Settings -->
+    <string name="profile_title">Profile</string>
+    <string name="status_available">Available</string>
+    <string name="status_busy">Busy</string>
+    <string name="status_away">Away</string>
+    <string name="status_dnd">Do Not Disturb</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_account">Account &amp; Security</string>
+    <string name="settings_audio">Audio &amp; Echo Cancellation</string>
+    <string name="settings_video">Video Resolution &amp; Quality</string>
+    <string name="settings_data_saver">Data Saver Mode</string>
+    <string name="settings_data_saver_desc">Reduces bitrate and resolution on cellular networks</string>
+    <string name="settings_notifications">Notifications</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_privacy">Privacy Policy</string>
+    <string name="settings_about">About CallfriendsZ</string>
+    <string name="logout">Log Out</string>
+
+    <!-- Auth -->
+    <string name="auth_login">Sign In</string>
+    <string name="auth_signup">Create Account</string>
+    <string name="auth_email_hint">Email address</string>
+    <string name="auth_password_hint">Password</string>
+    <string name="auth_forgot_pass">Forgot password?</string>
+    <string name="auth_continue_guest">Continue as Guest</string>
+
+    <!-- Recording & Transcription -->
+    <string name="recording_active">Meeting is being recorded</string>
+    <string name="live_captions">Live Captions</string>
+
+    <!-- Errors & Permissions -->
+    <string name="permission_camera_mic_title">Camera &amp; Microphone Access</string>
+    <string name="permission_camera_mic_desc">CallfriendsZ requires camera and audio permissions to conduct video meetings.</string>
+    <string name="grant_permission">Grant Permission</string>
+    <string name="screen_share_dialog_title">Share Your Screen?</string>
+    <string name="screen_share_dialog_desc">CallfriendsZ will display everything visible on your screen to meeting participants.</string>
+    <string name="start_sharing">Start Sharing</string>
+    <string name="error_meeting_not_found">Meeting was not found or has expired.</string>
+    <string name="error_reconnecting">Connection lost. Reconnecting automatically…</string>
+    <string name="retry">Retry</string>
+    <string name="search_contacts_hint">Search contacts by name or email…</string>
+    <string name="contacts_title">Contacts</string>
+    <string name="host_controls">Host Controls</string>
+    <string name="waiting_room_desc">Waiting for the host to let you into the meeting…</string>
+    <string name="type_message">Type a message…</string>
+    <string name="participants">Participants</string>
+    <string name="meetings_title">Meetings</string>
+    <string name="status_title">Presence Status</string>
+    <string name="video_resolution">Video Resolution</string>
+    <string name="data_saver">Data Saver Mode</string>
+    <string name="noise_cancellation">Noise Suppression</string>
+    <string name="echo_cancellation">Acoustic Echo Cancellation</string>
+    <string name="language_title">Language &amp; Localization</string>
+</resources>

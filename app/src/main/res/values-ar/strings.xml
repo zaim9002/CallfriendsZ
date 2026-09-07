@@ -1,0 +1,215 @@
+<resources>
+    <string name="app_name">CallfriendsZ</string>
+    <string name="tagline">مكالمات فيديو واجتماعات آمنة فائقة الدقة</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">الرئيسية</string>
+    <string name="nav_calls">المكالمات</string>
+    <string name="nav_meetings">الاجتماعات</string>
+    <string name="nav_contacts">جهات الاتصال</string>
+    <string name="nav_profile">الملف الشخصي</string>
+
+    <!-- Home Screen -->
+    <string name="start_new_meeting">بدء اجتماع جديد</string>
+    <string name="new_meeting">اجتماع جديد</string>
+    <string name="join_with_code">انضمام بكود</string>
+    <string name="schedule_meeting">جدولة اجتماع</string>
+    <string name="upcoming_meetings">الاجتماعات القادمة</string>
+    <string name="recent_meetings">آخر الاجتماعات</string>
+    <string name="no_upcoming_meetings">لا توجد اجتماعات قادمة مجدولة</string>
+    <string name="no_recent_meetings">لا توجد اجتماعات سابقة حتى الآن</string>
+    <string name="join">انضمام</string>
+    <string name="rejoin">إعادة الانضمام</string>
+    <string name="host">المضيف</string>
+    <string name="participants_count">%1$d مشاركين</string>
+
+    <!-- Create Meeting -->
+    <string name="create_meeting_title">إنشاء اجتماع جديد</string>
+    <string name="meeting_name_hint">اسم الاجتماع (مثال: اجتماع فريق العمل)</string>
+    <string name="meeting_desc_hint">الوصف (اختياري)</string>
+    <string name="meeting_type">سياسة الانضمام للاجتماع</string>
+    <string name="access_anyone">أي شخص يملك الرابط يمكنه الانضمام</string>
+    <string name="access_ask">طلب الإذن بالانضمام (غرفة الانتظار)</string>
+    <string name="access_invited">المستخدمون المدعوون فقط</string>
+    <string name="meeting_id">معرّف الاجتماع</string>
+    <string name="meeting_password">كلمة المرور (اختياري)</string>
+    <string name="meeting_password_hint">أدخل كلمة مرور للاجتماع</string>
+    <string name="permission_rules">أذونات وصلاحيات الاجتماع</string>
+    <string name="allow_quick_join">السماح بالدخول السريع بدون معاينة</string>
+    <string name="allow_guest_users">السماح للمستخدمين الضيوف</string>
+    <string name="allow_chat">تفعيل الدردشة أثناء الاجتماع</string>
+    <string name="allow_screen_share">السماح بمشاركة الشاشة</string>
+    <string name="allow_recording">السماح بالتسجيل السحابي</string>
+    <string name="allow_camera">السماح للمشاركين بتشغيل الكاميرا</string>
+    <string name="allow_mic">السماح للمشاركين بتشغيل الميكروفون</string>
+    <string name="btn_create_meeting">إنشاء والحصول على الرابط</string>
+    <string name="meeting_ready">اجتماعك جاهز الآن!</string>
+    <string name="copy_link">نسخ الرابط</string>
+    <string name="link_copied">تم نسخ رابط الاجتماع إلى الحافظة</string>
+    <string name="share_link">مشاركة الرابط</string>
+    <string name="start_meeting">بدء الاجتماع الآن</string>
+
+    <!-- Join Screen & Preview -->
+    <string name="join_meeting_title">الانضمام إلى اجتماع</string>
+    <string name="enter_code_hint">أدخل رمز الاجتماع أو الرابط</string>
+    <string name="enter_password_hint">أدخل كلمة المرور إذا كان الاجتماع محميًا</string>
+    <string name="preview_title">معاينة قبل الدخول</string>
+    <string name="your_name">اسمك في الاجتماع</string>
+    <string name="name_hint">أدخل اسمك المعروض</string>
+    <string name="test_audio">اختبار الصوت</string>
+    <string name="audio_route">مخرج الصوت</string>
+    <string name="route_speaker">مكبر الصوت (Speaker)</string>
+    <string name="route_earpiece">سماعة الهاتف</string>
+    <string name="route_bluetooth">سماعة بلوتوث</string>
+    <string name="route_wired">سماعة سلكية</string>
+    <string name="ready_to_join">هل أنت مستعد للانضمام؟</string>
+    <string name="join_now">انضمام الآن</string>
+
+    <!-- Meeting Active Screen -->
+    <string name="meeting_duration">المدة</string>
+    <string name="leave_meeting">مغادرة الاجتماع</string>
+    <string name="end_for_all">إنهاء الاجتماع للجميع</string>
+    <string name="confirm_end_all_title">هل تريد إنهاء الاجتماع للجميع؟</string>
+    <string name="confirm_end_all_desc">سيتم فصل جميع المشاركين من الاجتماع فورًا.</string>
+    <string name="confirm">تأكيد</string>
+    <string name="cancel">إلغاء</string>
+
+    <!-- Controls -->
+    <string name="control_mic">الميكروفون</string>
+    <string name="control_camera">الكاميرا</string>
+    <string name="control_switch_camera">تبديل</string>
+    <string name="control_audio">الصوت</string>
+    <string name="control_share_screen">مشاركة الشاشة</string>
+    <string name="control_stop_share">إيقاف المشاركة</string>
+    <string name="control_chat">الدردشة</string>
+    <string name="control_participants">المشاركون</string>
+    <string name="control_reactions">تفاعل</string>
+    <string name="control_raise_hand">رفع اليد</string>
+    <string name="control_lower_hand">خفض اليد</string>
+    <string name="control_more">المزيد</string>
+
+    <!-- Network & Quality -->
+    <string name="net_excellent">فائقة الدقة • اتصال ممتاز</string>
+    <string name="net_good">اتصال جيد</string>
+    <string name="net_poor">اتصال ضعيف</string>
+    <string name="net_reconnecting">جارٍ إعادة الاتصال…</string>
+    <string name="stats_rtt">زمن الوصول: %1$d م.ث</string>
+    <string name="stats_packet_loss">فقدان الحزم: %1$.1f%%</string>
+    <string name="stats_bitrate">معدل البث: %1$d ك.بت/ث</string>
+
+    <!-- Layouts -->
+    <string name="layout_grid">شبكة</string>
+    <string name="layout_speaker">المتحدث</string>
+    <string name="layout_spotlight">التركيز</string>
+    <string name="layout_pip">صورة داخل صورة</string>
+
+    <!-- Waiting Room -->
+    <string name="waiting_room_title">غرفة الانتظار</string>
+    <string name="waiting_room_msg">في انتظار موافقة المضيف للسماح لك بالدخول…</string>
+    <string name="waiting_requests_title">طلبات الانضمام</string>
+    <string name="btn_admit">قبول</string>
+    <string name="btn_deny">رفض</string>
+
+    <!-- Chat & Files -->
+    <string name="chat_title">رسائل الاجتماع</string>
+    <string name="chat_input_hint">أرسل رسالة للجميع…</string>
+    <string name="send">إرسال</string>
+    <string name="reply">رد</string>
+    <string name="delete">حذف</string>
+    <string name="file_uploading">جارٍ رفع %1$s…</string>
+    <string name="file_completed">تمت مشاركة الملف</string>
+    <string name="file_failed">فشل الرفع</string>
+    <string name="attach_file">إرفاق ملف</string>
+
+    <!-- Participants & Host Controls -->
+    <string name="participants_title">المشاركون (%1$d)</string>
+    <string name="host_controls_title">تحكم المضيف</string>
+    <string name="lock_meeting">قفل الاجتماع</string>
+    <string name="lock_meeting_desc">منع انضمام أي مشاركين جدد</string>
+    <string name="allow_unmute">السماح للمشاركين بإلغاء الكتم</string>
+    <string name="allow_camera_sharing">السماح للمشاركين بتشغيل الفيديو</string>
+    <string name="mute_all">كتم صوت الجميع</string>
+    <string name="mute_participant">كتم</string>
+    <string name="remove_participant">إزالة</string>
+    <string name="make_cohost">تعيين كمضيف مشارك</string>
+
+    <!-- Calls & Contacts -->
+    <string name="calls_title">المكالمات</string>
+    <string name="call_incoming">مكالمة واردة</string>
+    <string name="call_outgoing">مكالمة صادرة</string>
+    <string name="call_missed">مكالمة لم يرد عليها</string>
+    <string name="new_call">مكالمة جديدة</string>
+    <string name="search_hint">ابحث عن مستخدمين، اجتماعات…</string>
+    <string name="audio_call">مكالمة صوتية</string>
+    <string name="video_call">مكالمة فيديو</string>
+
+    <!-- Schedule & Calendar -->
+    <string name="schedule_title">جدولة اجتماع</string>
+    <string name="meeting_date">التاريخ</string>
+    <string name="meeting_start_time">وقت البدء</string>
+    <string name="meeting_end_time">وقت الانتهاء</string>
+    <string name="repeat_label">التكرار</string>
+    <string name="repeat_never">بدون تكرار</string>
+    <string name="repeat_daily">يوميًا</string>
+    <string name="repeat_weekly">أسبوعيًا</string>
+    <string name="reminder_label">التنبيه قبل الموعد</string>
+    <string name="reminder_10m">قبل 10 دقائق</string>
+    <string name="calendar_today">اليوم</string>
+    <string name="calendar_tomorrow">غدًا</string>
+    <string name="calendar_upcoming">القادمة</string>
+
+    <!-- Profile & Settings -->
+    <string name="profile_title">الملف الشخصي</string>
+    <string name="status_available">متاح</string>
+    <string name="status_busy">مشغول</string>
+    <string name="status_away">بالخارج</string>
+    <string name="status_dnd">عدم الإزعاج</string>
+    <string name="settings_title">الإعدادات</string>
+    <string name="settings_account">الحساب والأمان</string>
+    <string name="settings_audio">الصوت وعزل الضوضاء</string>
+    <string name="settings_video">دقة وجودة الفيديو</string>
+    <string name="settings_data_saver">وضع توفير البيانات</string>
+    <string name="settings_data_saver_desc">تقليل جودة البث والبيانات على شبكات الهاتف</string>
+    <string name="settings_notifications">الإشعارات</string>
+    <string name="settings_language">اللغة</string>
+    <string name="settings_theme">المظهر</string>
+    <string name="settings_privacy">سياسة الخصوصية</string>
+    <string name="settings_about">حول CallfriendsZ</string>
+    <string name="logout">تسجيل الخروج</string>
+
+    <!-- Auth -->
+    <string name="auth_login">تسجيل الدخول</string>
+    <string name="auth_signup">إنشاء حساب جديد</string>
+    <string name="auth_email_hint">البريد الإلكتروني</string>
+    <string name="auth_password_hint">كلمة المرور</string>
+    <string name="auth_forgot_pass">نسيت كلمة المرور؟</string>
+    <string name="auth_continue_guest">المتابعة كضيف</string>
+
+    <!-- Recording & Transcription -->
+    <string name="recording_active">الاجتماع قيد التسجيل حاليًا</string>
+    <string name="live_captions">الترجمة والتفريغ الحي</string>
+
+    <!-- Errors & Permissions -->
+    <string name="permission_camera_mic_title">إذن الكاميرا والميكروفون</string>
+    <string name="permission_camera_mic_desc">يحتاج تطبيق CallfriendsZ إلى صلاحيات الكاميرا والصوت لإجراء اجتماعات ومكالمات الفيديو.</string>
+    <string name="grant_permission">منح الإذن</string>
+    <string name="screen_share_dialog_title">هل تريد مشاركة شاشتك؟</string>
+    <string name="screen_share_dialog_desc">سيعرض CallfriendsZ كل ما يظهر على شاشتك لجميع المشاركين في الاجتماع.</string>
+    <string name="start_sharing">بدء المشاركة</string>
+    <string name="error_meeting_not_found">لم يتم العثور على الاجتماع أو انتهت صلاحيته.</string>
+    <string name="error_reconnecting">انقطع الاتصال. جارٍ إعادة الاتصال تلقائيًا…</string>
+    <string name="retry">إعادة المحاولة</string>
+    <string name="search_contacts_hint">البحث عن جهات اتصال بالاسم أو البريد…</string>
+    <string name="contacts_title">جهات الاتصال</string>
+    <string name="host_controls">تحكم المضيف</string>
+    <string name="waiting_room_desc">في انتظار موافقة المضيف على دخول الاجتماع…</string>
+    <string name="type_message">اكتب رسالة…</string>
+    <string name="participants">المشاركون</string>
+    <string name="meetings_title">الاجتماعات</string>
+    <string name="status_title">حالة التواجد</string>
+    <string name="video_resolution">دقة الفيديو</string>
+    <string name="data_saver">وضع توفير البيانات</string>
+    <string name="noise_cancellation">عزل الضوضاء</string>
+    <string name="echo_cancellation">إلغاء الصدى الصوتي</string>
+    <string name="language_title">اللغة والاتجاه</string>
+</resources>

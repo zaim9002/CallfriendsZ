@@ -1,0 +1,6 @@
+{
+  "name": "CallfriendsZ",
+  "description": "Professional video meetings and audio calling app with WebRTC architecture, host controls, screen sharing, and real-time collaboration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
