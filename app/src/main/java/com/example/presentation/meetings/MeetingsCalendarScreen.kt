@@ -126,17 +126,17 @@ fun MeetingsCalendarScreen(
                 Tab(
                     selected = uiState.selectedTab == CalendarTab.TODAY,
                     onClick = { viewModel.selectTab(CalendarTab.TODAY) },
-                    text = { Text("Today", fontWeight = FontWeight.SemiBold) }
+                    text = { Text(stringResource(R.string.tab_today), fontWeight = FontWeight.SemiBold) }
                 )
                 Tab(
                     selected = uiState.selectedTab == CalendarTab.TOMORROW,
                     onClick = { viewModel.selectTab(CalendarTab.TOMORROW) },
-                    text = { Text("Tomorrow", fontWeight = FontWeight.SemiBold) }
+                    text = { Text(stringResource(R.string.tab_tomorrow), fontWeight = FontWeight.SemiBold) }
                 )
                 Tab(
                     selected = uiState.selectedTab == CalendarTab.UPCOMING,
                     onClick = { viewModel.selectTab(CalendarTab.UPCOMING) },
-                    text = { Text("Upcoming", fontWeight = FontWeight.SemiBold) }
+                    text = { Text(stringResource(R.string.tab_upcoming), fontWeight = FontWeight.SemiBold) }
                 )
             }
 

@@ -23,11 +23,6 @@ object MeetingSecurityValidator {
     }
 
     fun sanitizeMeetingCode(input: String): String {
-        val trimmed = input.trim()
-        return if (trimmed.startsWith("https://") || trimmed.startsWith("http://")) {
-            trimmed.substringAfterLast("/")
-        } else {
-            trimmed
-        }
+        return com.example.core.Constants.extractMeetingId(input)
     }
 }

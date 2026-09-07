@@ -212,4 +212,7 @@
     <string name="noise_cancellation">Noise Suppression</string>
     <string name="echo_cancellation">Acoustic Echo Cancellation</string>
     <string name="language_title">Language &amp; Localization</string>
+    <string name="tab_today">Today</string>
+    <string name="tab_tomorrow">Tomorrow</string>
+    <string name="tab_upcoming">Upcoming</string>
 </resources>

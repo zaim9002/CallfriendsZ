@@ -6,8 +6,8 @@
     <string name="nav_home">الرئيسية</string>
     <string name="nav_calls">المكالمات</string>
     <string name="nav_meetings">الاجتماعات</string>
-    <string name="nav_contacts">جهات الاتصال</string>
-    <string name="nav_profile">الملف الشخصي</string>
+    <string name="nav_contacts">الجهات</string>
+    <string name="nav_profile">حسابي</string>
 
     <!-- Home Screen -->
     <string name="start_new_meeting">بدء اجتماع جديد</string>
@@ -212,4 +212,7 @@
     <string name="noise_cancellation">عزل الضوضاء</string>
     <string name="echo_cancellation">إلغاء الصدى الصوتي</string>
     <string name="language_title">اللغة والاتجاه</string>
+    <string name="tab_today">اليوم</string>
+    <string name="tab_tomorrow">غداً</string>
+    <string name="tab_upcoming">القادمة</string>
 </resources>

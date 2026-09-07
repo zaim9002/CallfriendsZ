@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import com.example.R
 import com.example.core.AppContainer
 import com.example.presentation.calls.CallsScreen
@@ -83,36 +84,41 @@ fun MainScreen(
                 NavigationBarItem(
                     selected = currentTab == MainTab.HOME,
                     onClick = { currentTab = MainTab.HOME },
+                    alwaysShowLabel = false,
                     icon = { Icon(Icons.Default.Home, contentDescription = stringResource(R.string.nav_home)) },
-                    label = { Text(stringResource(R.string.nav_home)) },
+                    label = { Text(stringResource(R.string.nav_home), maxLines = 1, softWrap = false, overflow = TextOverflow.Ellipsis) },
                     colors = navBarColors()
                 )
                 NavigationBarItem(
                     selected = currentTab == MainTab.CALLS,
                     onClick = { currentTab = MainTab.CALLS },
+                    alwaysShowLabel = false,
                     icon = { Icon(Icons.Default.Call, contentDescription = stringResource(R.string.nav_calls)) },
-                    label = { Text(stringResource(R.string.nav_calls)) },
+                    label = { Text(stringResource(R.string.nav_calls), maxLines = 1, softWrap = false, overflow = TextOverflow.Ellipsis) },
                     colors = navBarColors()
                 )
                 NavigationBarItem(
                     selected = currentTab == MainTab.MEETINGS,
                     onClick = { currentTab = MainTab.MEETINGS },
+                    alwaysShowLabel = false,
                     icon = { Icon(Icons.Default.CalendarMonth, contentDescription = stringResource(R.string.nav_meetings)) },
-                    label = { Text(stringResource(R.string.nav_meetings)) },
+                    label = { Text(stringResource(R.string.nav_meetings), maxLines = 1, softWrap = false, overflow = TextOverflow.Ellipsis) },
                     colors = navBarColors()
                 )
                 NavigationBarItem(
                     selected = currentTab == MainTab.CONTACTS,
                     onClick = { currentTab = MainTab.CONTACTS },
+                    alwaysShowLabel = false,
                     icon = { Icon(Icons.Default.People, contentDescription = stringResource(R.string.nav_contacts)) },
-                    label = { Text(stringResource(R.string.nav_contacts)) },
+                    label = { Text(stringResource(R.string.nav_contacts), maxLines = 1, softWrap = false, overflow = TextOverflow.Ellipsis) },
                     colors = navBarColors()
                 )
                 NavigationBarItem(
                     selected = currentTab == MainTab.PROFILE,
                     onClick = { currentTab = MainTab.PROFILE },
+                    alwaysShowLabel = false,
                     icon = { Icon(Icons.Default.Person, contentDescription = stringResource(R.string.nav_profile)) },
-                    label = { Text(stringResource(R.string.nav_profile)) },
+                    label = { Text(stringResource(R.string.nav_profile), maxLines = 1, softWrap = false, overflow = TextOverflow.Ellipsis) },
                     colors = navBarColors()
                 )
             }

@@ -44,7 +44,15 @@ class MainActivity : ComponentActivity() {
 
     private fun handleDeepLink(intent: Intent?) {
         val data = intent?.data ?: return
-        if (data.host == "callfriendsz.app" && data.path?.startsWith("/meeting/") == true) {
+        val url = data.toString()
+        val extracted = com.example.core.Constants.extractMeetingId(url)
+        if (extracted.isNotBlank() && extracted != url) {
+            initialMeetingId = extracted
+        } else if (data.scheme == "callfriendsz") {
+            initialMeetingId = data.lastPathSegment
+        } else if (data.host == "meet.jit.si" && data.path?.contains("CallfriendsZ_") == true) {
+            initialMeetingId = data.path?.substringAfter("CallfriendsZ_")
+        } else if (data.host == "callfriendsz.app" && data.path?.startsWith("/meeting/") == true) {
             initialMeetingId = data.lastPathSegment
         }
     }

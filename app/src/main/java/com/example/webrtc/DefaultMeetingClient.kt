@@ -120,6 +120,7 @@ class DefaultMeetingClient(
             isScreenSharing = false,
             isSpeaking = false,
             isHandRaised = false,
+            isLocal = true,
             connectionQuality = "Excellent"
         )
 

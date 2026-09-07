@@ -49,6 +49,7 @@ data class Participant(
     val isScreenSharing: Boolean = false,
     val isSpeaking: Boolean = false,
     val isHandRaised: Boolean = false,
+    val isLocal: Boolean = false,
     val connectionQuality: String = "Excellent"
 )
 

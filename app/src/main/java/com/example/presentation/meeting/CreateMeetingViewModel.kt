@@ -41,7 +41,7 @@ class CreateMeetingViewModel(
 
     fun generateNewMeetingId() {
         val newId = MeetingSecurityValidator.generateSecureMeetingId()
-        val link = "${Constants.DEEP_LINK_SCHEME}://${Constants.DEEP_LINK_HOST}${Constants.DEEP_LINK_MEETING_PREFIX}$newId"
+        val link = Constants.getPublicMeetingUrl(newId)
         _uiState.value = _uiState.value.copy(
             generatedMeetingId = newId,
             generatedMeetingLink = link

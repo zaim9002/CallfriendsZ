@@ -51,6 +51,17 @@ import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material.icons.filled.PresentToAll
 import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material.icons.filled.StopScreenShare
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material.icons.filled.LiveTv
+import androidx.compose.material.icons.filled.ViewStream
+import android.content.Intent
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import com.example.core.Constants
+import com.example.presentation.components.CameraPreview
+import com.example.presentation.components.LiveWebRtcMeetingView
 import androidx.compose.material.icons.filled.Videocam
 import androidx.compose.material.icons.filled.VideocamOff
 import androidx.compose.material3.AlertDialog
@@ -123,6 +134,7 @@ fun MeetingActiveScreen(
     val context = LocalContext.current
     var showMoreMenu by remember { mutableStateOf(false) }
     var showReactionsBar by remember { mutableStateOf(false) }
+    var isLiveWebRtcMode by remember { mutableStateOf(true) }
 
     LaunchedEffect(meetingId) {
         viewModel.initializeMeeting(meetingId)
@@ -138,7 +150,7 @@ fun MeetingActiveScreen(
                 .clickable { viewModel.toggleControlsVisibility() }
                 .testTag("meeting_active_screen")
         ) {
-            // Main Content: Participant Video Grid
+            // Main Content: Participant Video Grid or Live WebRTC Room
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -151,6 +163,14 @@ fun MeetingActiveScreen(
                             viewModel.leaveMeeting()
                             onLeaveMeeting()
                         }
+                    )
+                } else if (isLiveWebRtcMode) {
+                    LiveWebRtcMeetingView(
+                        roomUrl = Constants.getPublicMeetingUrl(meetingId),
+                        displayName = uiState.meeting?.hostName ?: "User",
+                        isAudioMuted = uiState.mediaState.isAudioMuted,
+                        isVideoMuted = uiState.mediaState.isVideoMuted,
+                        modifier = Modifier.fillMaxSize()
                     )
                 } else {
                     ParticipantVideoGrid(
@@ -177,6 +197,18 @@ fun MeetingActiveScreen(
                     durationSeconds = uiState.durationSeconds,
                     quality = uiState.connectionQuality,
                     isRecording = uiState.isRecording,
+                    isLiveMode = isLiveWebRtcMode,
+                    onToggleMode = { isLiveWebRtcMode = !isLiveWebRtcMode },
+                    onShareClick = {
+                        val publicLink = Constants.getPublicMeetingUrl(meetingId)
+                        val invitation = "انضم إلى مكالمة فيديو CallfriendsZ:\n$publicLink\n\nرمز الاجتماع: $meetingId\n(يمكنك الانضمام مباشرة من المتصفح أو عبر التطبيق)"
+                        val sendIntent = Intent().apply {
+                            action = Intent.ACTION_SEND
+                            putExtra(Intent.EXTRA_TEXT, invitation)
+                            type = "text/plain"
+                        }
+                        context.startActivity(Intent.createChooser(sendIntent, "مشاركة رابط الاجتماع"))
+                    },
                     onLeaveClick = {
                         viewModel.leaveMeeting()
                         onLeaveMeeting()
@@ -300,6 +332,9 @@ private fun MeetingTopBar(
     durationSeconds: Long,
     quality: NetworkQuality,
     isRecording: Boolean,
+    isLiveMode: Boolean,
+    onToggleMode: () -> Unit,
+    onShareClick: () -> Unit,
     onLeaveClick: () -> Unit
 ) {
     val minutes = durationSeconds / 60
@@ -309,15 +344,16 @@ private fun MeetingTopBar(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(horizontal = 12.dp, vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Column {
+        Column(modifier = Modifier.weight(1f, fill = false)) {
             Text(
                 text = meetingTitle,
                 style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                color = BrandTextPrimary
+                color = BrandTextPrimary,
+                maxLines = 1
             )
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
@@ -325,7 +361,7 @@ private fun MeetingTopBar(
                     style = MaterialTheme.typography.bodySmall,
                     color = BrandTextSecondary
                 )
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(6.dp))
                 // Quality Indicator
                 Box(
                     modifier = Modifier
@@ -343,37 +379,74 @@ private fun MeetingTopBar(
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
                     text = when (quality) {
-                        NetworkQuality.EXCELLENT -> "HD • Excellent"
-                        NetworkQuality.GOOD -> "Good"
-                        NetworkQuality.POOR -> "Poor"
-                        NetworkQuality.RECONNECTING -> "Reconnecting..."
+                        NetworkQuality.EXCELLENT -> "HD • ممتاز"
+                        NetworkQuality.GOOD -> "جيد"
+                        NetworkQuality.POOR -> "ضعيف"
+                        NetworkQuality.RECONNECTING -> "إعادة اتصال..."
                     },
                     style = MaterialTheme.typography.labelSmall,
                     color = BrandTextTertiary
                 )
-                if (isRecording) {
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Icon(
-                        imageVector = Icons.Default.FiberManualRecord,
-                        contentDescription = "REC",
-                        tint = BrandDanger,
-                        modifier = Modifier.size(12.dp)
-                    )
-                    Spacer(modifier = Modifier.width(2.dp))
-                    Text(text = "REC", color = BrandDanger, style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold)
-                }
             }
         }
 
-        // Leave Button
-        Button(
-            onClick = onLeaveClick,
-            shape = RoundedCornerShape(12.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = BrandDanger)
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            Icon(Icons.Default.CallEnd, contentDescription = "Leave", modifier = Modifier.size(16.dp))
-            Spacer(modifier = Modifier.width(6.dp))
-            Text(stringResource(R.string.leave_meeting), fontWeight = FontWeight.Bold, fontSize = 13.sp)
+            // Mode Toggle Chip
+            Card(
+                onClick = onToggleMode,
+                shape = RoundedCornerShape(10.dp),
+                colors = CardDefaults.cardColors(containerColor = if (isLiveMode) BrandPrimary else BrandSurfaceElevated)
+            ) {
+                Row(
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = if (isLiveMode) Icons.Default.LiveTv else Icons.Default.ViewStream,
+                        contentDescription = null,
+                        tint = BrandTextPrimary,
+                        modifier = Modifier.size(14.dp)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        text = if (isLiveMode) "بث حي" else "شبكة",
+                        fontSize = 11.sp,
+                        color = BrandTextPrimary,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+
+            // Share Link Icon Button
+            IconButton(
+                onClick = onShareClick,
+                modifier = Modifier
+                    .size(36.dp)
+                    .clip(CircleShape)
+                    .background(BrandSurfaceElevated)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Share,
+                    contentDescription = "Share",
+                    tint = BrandTextPrimary,
+                    modifier = Modifier.size(18.dp)
+                )
+            }
+
+            // Leave Button
+            Button(
+                onClick = onLeaveClick,
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = BrandDanger),
+                contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 10.dp, vertical = 6.dp)
+            ) {
+                Icon(Icons.Default.CallEnd, contentDescription = "Leave", modifier = Modifier.size(16.dp))
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(stringResource(R.string.leave_meeting), fontWeight = FontWeight.Bold, fontSize = 12.sp)
+            }
         }
     }
 }
@@ -526,30 +599,35 @@ private fun ParticipantTile(participant: Participant) {
         contentAlignment = Alignment.Center
     ) {
         if (participant.isVideoEnabled) {
-            // Simulated Active Camera Feed
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(
-                        Brush.linearGradient(
-                            listOf(Color(0xFF1B2433), Color(0xFF0F1722))
-                        )
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                // Subtle video silhouette
+            if (participant.isLocal) {
+                CameraPreview(
+                    isFrontCamera = true,
+                    modifier = Modifier.fillMaxSize()
+                )
+            } else {
                 Box(
                     modifier = Modifier
-                        .size(80.dp)
-                        .clip(CircleShape)
-                        .background(BrandSurfaceElevated),
+                        .fillMaxSize()
+                        .background(
+                            Brush.linearGradient(
+                                listOf(Color(0xFF1B2433), Color(0xFF0F1722))
+                            )
+                        ),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = participant.displayName.take(2).uppercase(),
-                        style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-                        color = BrandTextPrimary
-                    )
+                    Box(
+                        modifier = Modifier
+                            .size(80.dp)
+                            .clip(CircleShape)
+                            .background(BrandSurfaceElevated),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = participant.displayName.take(2).uppercase(),
+                            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+                            color = BrandTextPrimary
+                        )
+                    }
                 }
             }
         } else {

@@ -68,6 +68,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.R
 import com.example.core.AudioRoute
+import com.example.presentation.components.CameraPreview
 import com.example.presentation.auth.outlinedFieldColors
 import com.example.ui.theme.BrandBackground
 import com.example.ui.theme.BrandBorder
@@ -192,39 +193,10 @@ fun JoinMeetingScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         if (uiState.isCameraEnabled) {
-                            // Simulated Camera Feed Surface
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(
-                                        Brush.verticalGradient(
-                                            listOf(Color(0xFF1E293B), Color(0xFF0F172A))
-                                        )
-                                    ),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                    Box(
-                                        modifier = Modifier
-                                            .size(72.dp)
-                                            .clip(CircleShape)
-                                            .background(BrandSurfaceElevated),
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        Text(
-                                            text = uiState.displayNameInput.take(2).uppercase().ifBlank { "ME" },
-                                            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-                                            color = BrandTextPrimary
-                                        )
-                                    }
-                                    Spacer(modifier = Modifier.height(8.dp))
-                                    Text(
-                                        text = if (uiState.isFrontCamera) "Front Camera Active" else "Rear Camera Active",
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = BrandTextSecondary
-                                    )
-                                }
-                            }
+                            CameraPreview(
+                                isFrontCamera = uiState.isFrontCamera,
+                                modifier = Modifier.fillMaxSize()
+                            )
                         } else {
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Icon(

@@ -303,12 +303,16 @@ fun CreateMeetingScreen(
 
                         OutlinedButton(
                             onClick = {
+                                val invitation = "انضم إلى مكالمة فيديو CallfriendsZ:\n" +
+                                        "${uiState.generatedMeetingLink}\n\n" +
+                                        "رمز الاجتماع: ${uiState.generatedMeetingId}\n" +
+                                        "(يمكنك الانضمام مباشرة من أي متصفح هاتف/كمبيوتر أو عبر التطبيق)"
                                 val sendIntent = Intent().apply {
                                     action = Intent.ACTION_SEND
-                                    putExtra(Intent.EXTRA_TEXT, "Join my CallfriendsZ meeting: ${uiState.generatedMeetingLink}")
+                                    putExtra(Intent.EXTRA_TEXT, invitation)
                                     type = "text/plain"
                                 }
-                                context.startActivity(Intent.createChooser(sendIntent, "Share Meeting Link"))
+                                context.startActivity(Intent.createChooser(sendIntent, "مشاركة رابط الاجتماع"))
                             },
                             modifier = Modifier.weight(1f),
                             shape = RoundedCornerShape(12.dp)
