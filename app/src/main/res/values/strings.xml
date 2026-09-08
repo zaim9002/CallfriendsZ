@@ -215,4 +215,21 @@
     <string name="tab_today">Today</string>
     <string name="tab_tomorrow">Tomorrow</string>
     <string name="tab_upcoming">Upcoming</string>
+    <string name="auth_google_login">Sign in with Google</string>
+    <string name="add_contact">Add Contact</string>
+    <string name="no_contacts_title">No contacts yet</string>
+    <string name="no_contacts_desc">Add your friends or share the meeting link directly with them to connect in the app.</string>
+    <string name="contact_name">Full Name</string>
+    <string name="contact_email">Email Address</string>
+    <string name="contact_phone">Phone or Note (Optional)</string>
+    <string name="meeting_notes_title">Meeting Notes &amp; Minutes</string>
+    <string name="meeting_notes_hint">Write agenda, key decisions, and action items here…</string>
+    <string name="copy_notes">Copy Notes</string>
+    <string name="notes_copied">Meeting notes copied to clipboard</string>
+    <string name="invite_friend">Invite</string>
+    <string name="invite_via_link">Share Link</string>
+    <string name="save_contact">Save Contact</string>
+    <string name="delete_contact">Delete</string>
+    <string name="meeting_link_title">Meeting Link &amp; Code</string>
+    <string name="native_meeting_badge">In-App Native HD Meeting</string>
 </resources>

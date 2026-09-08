@@ -26,23 +26,6 @@ class MeetingRepositoryImpl(
     private val inMemoryParticipants = mutableMapOf<String, MutableStateFlow<List<Participant>>>()
     private val inMemoryJoinRequests = mutableMapOf<String, MutableStateFlow<List<JoinRequest>>>()
 
-    init {
-        // Pre-populate sample recent meeting for rich first-run experience
-        val sampleMeeting = Meeting(
-            id = "cfz-sync-942",
-            title = "Quarterly Roadmap Review",
-            description = "Product planning and release milestones",
-            hostId = "usr_lead",
-            hostName = "Sarah Jenkins",
-            accessType = MeetingAccessType.ANYONE_WITH_LINK,
-            passwordProtected = false,
-            createdAt = System.currentTimeMillis() - 86400000L,
-            durationSeconds = 2450,
-            participantCount = 6
-        )
-        inMemoryMeetings[sampleMeeting.id] = sampleMeeting
-    }
-
     override suspend fun createMeeting(meeting: Meeting): Resource<Meeting> {
         inMemoryMeetings[meeting.id] = meeting
         saveRecentMeeting(meeting)
@@ -110,15 +93,9 @@ class MeetingRepositoryImpl(
                     MeetingMessage(
                         id = "msg_sys_1",
                         senderId = "system",
-                        senderName = "System",
-                        text = "Meeting started. Chat is end-to-end encrypted.",
+                        senderName = "CallfriendsZ",
+                        text = "مرحباً بك! تم بدء جلسة الاجتماع بنجاح. شارك الرابط أو الرمز لدعوة أصدقائك.",
                         isSystemMessage = true
-                    ),
-                    MeetingMessage(
-                        id = "msg_2",
-                        senderId = "usr_sami",
-                        senderName = "Sami Al-Otaibi",
-                        text = "Hello everyone! Sound and video are crystal clear."
                     )
                 )
             )
@@ -146,15 +123,7 @@ class MeetingRepositoryImpl(
 
     override suspend fun fetchJoinRequests(meetingId: String): Flow<List<JoinRequest>> {
         val flow = inMemoryJoinRequests.getOrPut(meetingId) {
-            MutableStateFlow(
-                listOf(
-                    JoinRequest(
-                        id = "req_1",
-                        userId = "guest_tariq",
-                        displayName = "Tariq Mansoor"
-                    )
-                )
-            )
+            MutableStateFlow(emptyList())
         }
         return flow.asStateFlow()
     }

@@ -115,7 +115,31 @@ fun CallsScreen(
         ) {
             if (uiState.callHistory.isEmpty()) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text("No call history yet", color = BrandTextTertiary)
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(10.dp),
+                        modifier = Modifier.padding(24.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(64.dp)
+                                .clip(CircleShape)
+                                .background(BrandSurfaceElevated),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(Icons.Default.Call, contentDescription = null, tint = BrandPrimary, modifier = Modifier.size(32.dp))
+                        }
+                        Text("لا توجد مكالمات سابقة بعد", color = BrandTextPrimary, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                        Text("ابدأ مكالمتك الأولى أو أنشئ اجتماعاً لمشاركته مع أصدقائك!", color = BrandTextSecondary, fontSize = 13.sp)
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Button(
+                            onClick = { viewModel.toggleNewCallSheet(true) },
+                            colors = ButtonDefaults.buttonColors(containerColor = BrandPrimary),
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Text(stringResource(R.string.new_call))
+                        }
+                    }
                 }
             } else {
                 LazyColumn(

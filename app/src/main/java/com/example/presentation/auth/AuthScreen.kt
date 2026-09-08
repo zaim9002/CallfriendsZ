@@ -1,6 +1,7 @@
 package com.example.presentation.auth
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -26,6 +28,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -45,6 +48,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -54,12 +58,14 @@ import com.example.ui.theme.BrandBorder
 import com.example.ui.theme.BrandDanger
 import com.example.ui.theme.BrandPrimary
 import com.example.ui.theme.BrandSurface
+import com.example.ui.theme.BrandSurfaceElevated
 import com.example.ui.theme.BrandTextPrimary
 import com.example.ui.theme.BrandTextSecondary
 
 @Composable
 fun AuthScreen(
     viewModel: AuthViewModel,
+    pendingMeetingId: String? = null,
     onAuthSuccess: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -107,7 +113,7 @@ fun AuthScreen(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(14.dp))
 
                 Text(
                     text = if (uiState.isSignUpMode) stringResource(R.string.auth_signup) else stringResource(R.string.auth_login),
@@ -121,7 +127,92 @@ fun AuthScreen(
                     color = BrandTextSecondary
                 )
 
-                Spacer(modifier = Modifier.height(24.dp))
+                // If user entered via a shared meeting link
+                if (!pendingMeetingId.isNullOrBlank()) {
+                    Spacer(modifier = Modifier.height(14.dp))
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = CardDefaults.cardColors(containerColor = BrandPrimary.copy(alpha = 0.12f)),
+                        border = CardDefaults.outlinedCardBorder().copy(brush = Brush.linearGradient(listOf(BrandPrimary, BrandPrimary)))
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(12.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(
+                                text = "دعوة انضمام لاجتماع",
+                                fontWeight = FontWeight.Bold,
+                                color = BrandPrimary,
+                                fontSize = 14.sp
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = "سجل بحساب Google أو بريدك الإلكتروني للدخول فوراً للاجتماع:\n$pendingMeetingId",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = BrandTextPrimary,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                // Sign In with Google Button
+                Button(
+                    onClick = viewModel::loginWithGoogle,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp)
+                        .testTag("auth_google_btn"),
+                    shape = RoundedCornerShape(14.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.White,
+                        contentColor = Color(0xFF1F1F1F)
+                    ),
+                    border = CardDefaults.outlinedCardBorder().copy(brush = Brush.linearGradient(listOf(Color(0xFFDADCE0), Color(0xFFDADCE0)))),
+                    enabled = !uiState.isLoading
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(24.dp)
+                                .clip(CircleShape)
+                                .background(Color(0xFF4285F4)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text("G", color = Color.White, fontWeight = FontWeight.Black, fontSize = 14.sp)
+                        }
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            text = stringResource(R.string.auth_google_login),
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 15.sp,
+                            color = Color(0xFF1F1F1F)
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    HorizontalDivider(modifier = Modifier.weight(1f), color = BrandBorder)
+                    Text(
+                        text = "  أو عبر البريد  ",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = BrandTextSecondary
+                    )
+                    HorizontalDivider(modifier = Modifier.weight(1f), color = BrandBorder)
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
 
                 if (uiState.isSignUpMode) {
                     OutlinedTextField(
@@ -174,7 +265,7 @@ fun AuthScreen(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(20.dp))
 
                 Button(
                     onClick = viewModel::submitAuth,
@@ -212,7 +303,7 @@ fun AuthScreen(
                     Text(stringResource(R.string.auth_continue_guest))
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(14.dp))
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),

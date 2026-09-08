@@ -65,11 +65,37 @@ class AuthViewModel : ViewModel() {
         }
     }
 
-    fun loginAsGuest() {
+    fun loginWithGoogle() {
+        val state = _uiState.value
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true)
+            _uiState.value = state.copy(isLoading = true, errorMessage = null)
+            delay(400)
+            val googleEmail = if (state.email.isNotBlank() && state.email.contains("@")) {
+                state.email.trim()
+            } else {
+                "user.google@gmail.com"
+            }
+            val googleName = if (state.displayName.isNotBlank()) {
+                state.displayName.trim()
+            } else {
+                googleEmail.substringBefore("@").replace(".", " ").split(" ")
+                    .joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
+            }
+            UserSession.login(
+                email = googleEmail,
+                name = googleName
+            )
+            _uiState.value = _uiState.value.copy(isLoading = false, isSuccess = true)
+        }
+    }
+
+    fun loginAsGuest() {
+        val state = _uiState.value
+        viewModelScope.launch {
+            _uiState.value = state.copy(isLoading = true)
             delay(300)
-            UserSession.setGuest("Guest User")
+            val guestName = state.displayName.ifBlank { "Guest User" }
+            UserSession.setGuest(guestName)
             _uiState.value = _uiState.value.copy(isLoading = false, isSuccess = true)
         }
     }

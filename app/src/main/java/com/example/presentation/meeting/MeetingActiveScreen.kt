@@ -38,6 +38,7 @@ import androidx.compose.material.icons.filled.Cameraswitch
 import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.FiberManualRecord
 import androidx.compose.material.icons.filled.Grid3x3
 import androidx.compose.material.icons.filled.Group
@@ -277,6 +278,14 @@ fun MeetingActiveScreen(
                     }
                 )
                 DropdownMenuItem(
+                    text = { Text("ملاحظات الاجتماع (Notes)", color = BrandTextPrimary) },
+                    leadingIcon = { Icon(Icons.Default.Edit, contentDescription = null, tint = BrandPrimary) },
+                    onClick = {
+                        showMoreMenu = false
+                        viewModel.openSheet(ActiveSheet.NOTES)
+                    }
+                )
+                DropdownMenuItem(
                     text = { Text("Network Diagnostics", color = BrandTextPrimary) },
                     leadingIcon = { Icon(Icons.Default.Speed, contentDescription = null, tint = BrandSuccess) },
                     onClick = {
@@ -288,7 +297,7 @@ fun MeetingActiveScreen(
         }
     }
 
-    // Modal Bottom Sheets for In-call Chat, Participants, Host Controls
+    // Modal Bottom Sheets for In-call Chat, Participants, Host Controls, Notes
     when (uiState.activeBottomSheet) {
         ActiveSheet.CHAT -> {
             InMeetingChatSheet(
@@ -318,6 +327,14 @@ fun MeetingActiveScreen(
         ActiveSheet.DIAGNOSTICS -> {
             DiagnosticsDialog(
                 stats = uiState.stats,
+                onDismiss = viewModel::closeSheet
+            )
+        }
+        ActiveSheet.NOTES -> {
+            InMeetingNotesSheet(
+                meetingId = meetingId,
+                notes = uiState.meetingNotes,
+                onNotesChanged = viewModel::onNotesChanged,
                 onDismiss = viewModel::closeSheet
             )
         }
@@ -1253,5 +1270,114 @@ private fun DiagnosticItem(label: String, value: String) {
     ) {
         Text(text = label, color = BrandTextSecondary, style = MaterialTheme.typography.bodySmall)
         Text(text = value, color = BrandTextPrimary, style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold))
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun InMeetingNotesSheet(
+    meetingId: String,
+    notes: String,
+    onNotesChanged: (String) -> Unit,
+    onDismiss: () -> Unit
+) {
+    val context = androidx.compose.ui.platform.LocalContext.current
+    var textValue by androidx.compose.runtime.remember(notes) { androidx.compose.runtime.mutableStateOf(notes) }
+
+    androidx.compose.material3.ModalBottomSheet(
+        onDismissRequest = {
+            onNotesChanged(textValue)
+            onDismiss()
+        },
+        containerColor = BrandSurface,
+        scrimColor = Color.Black.copy(alpha = 0.65f)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+                .padding(bottom = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(Icons.Default.Edit, contentDescription = null, tint = BrandPrimary)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "ملاحظات الاجتماع (Meeting Notes)",
+                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                        color = BrandTextPrimary
+                    )
+                }
+
+                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                    androidx.compose.material3.IconButton(
+                        onClick = {
+                            val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                            val clip = ClipData.newPlainText("Meeting Notes", textValue)
+                            clipboard.setPrimaryClip(clip)
+                            Toast.makeText(context, "تم نسخ الملاحظات إلى الحافظة", Toast.LENGTH_SHORT).show()
+                        }
+                    ) {
+                        Icon(Icons.Default.ContentCopy, contentDescription = "Copy", tint = BrandTextSecondary)
+                    }
+
+                    androidx.compose.material3.IconButton(
+                        onClick = {
+                            if (textValue.isNotBlank()) {
+                                val sendIntent = Intent().apply {
+                                    action = Intent.ACTION_SEND
+                                    putExtra(Intent.EXTRA_TEXT, "ملاحظات اجتماع $meetingId:\n\n$textValue")
+                                    type = "text/plain"
+                                }
+                                context.startActivity(Intent.createChooser(sendIntent, "مشاركة ملاحظات الاجتماع"))
+                            }
+                        }
+                    ) {
+                        Icon(Icons.Default.Share, contentDescription = "Share", tint = BrandPrimary)
+                    }
+                }
+            }
+
+            androidx.compose.material3.OutlinedTextField(
+                value = textValue,
+                onValueChange = {
+                    textValue = it
+                    onNotesChanged(it)
+                },
+                placeholder = {
+                    Text(
+                        "اكتب ملخص أو نقاط وأجندة الاجتماع هنا...\n- نقطة 1:\n- نقطة 2:\n- القرارات:",
+                        color = BrandTextTertiary
+                    )
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(220.dp),
+                shape = RoundedCornerShape(14.dp),
+                colors = com.example.presentation.auth.outlinedFieldColors()
+            )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                Button(
+                    onClick = {
+                        onNotesChanged(textValue)
+                        Toast.makeText(context, "تم حفظ الملاحظات بنجاح!", Toast.LENGTH_SHORT).show()
+                        onDismiss()
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = BrandPrimary),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Text("حفظ الملاحظات")
+                }
+            }
+        }
     }
 }

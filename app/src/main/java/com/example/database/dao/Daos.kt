@@ -47,3 +47,34 @@ interface ScheduledMeetingDao {
     @Query("DELETE FROM scheduled_meetings WHERE id = :id")
     suspend fun deleteScheduledMeeting(id: String)
 }
+
+@Dao
+interface ContactDao {
+    @Query("SELECT * FROM contacts ORDER BY name ASC")
+    fun getAllContacts(): Flow<List<com.example.database.entity.ContactEntity>>
+
+    @Query("SELECT * FROM contacts WHERE name LIKE '%' || :query || '%' OR email LIKE '%' || :query || '%'")
+    suspend fun searchContacts(query: String): List<com.example.database.entity.ContactEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertContact(contact: com.example.database.entity.ContactEntity)
+
+    @Query("DELETE FROM contacts WHERE id = :id")
+    suspend fun deleteContact(id: String)
+}
+
+@Dao
+interface MeetingNoteDao {
+    @Query("SELECT * FROM meeting_notes ORDER BY createdAt DESC")
+    fun getAllNotes(): Flow<List<com.example.database.entity.MeetingNoteEntity>>
+
+    @Query("SELECT * FROM meeting_notes WHERE meetingId = :meetingId ORDER BY createdAt DESC")
+    fun getNotesForMeeting(meetingId: String): Flow<List<com.example.database.entity.MeetingNoteEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertNote(note: com.example.database.entity.MeetingNoteEntity)
+
+    @Query("DELETE FROM meeting_notes WHERE id = :id")
+    suspend fun deleteNote(id: String)
+}
+

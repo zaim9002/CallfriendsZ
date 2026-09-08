@@ -50,7 +50,8 @@ data class MeetingActiveUiState(
     val activeReaction: Pair<String, String>? = null, // Pair(sender, emoji)
     val isWaitingRoom: Boolean = false,
     val isRecording: Boolean = false,
-    val unreadMessageCount: Int = 0
+    val unreadMessageCount: Int = 0,
+    val meetingNotes: String = ""
 )
 
 enum class ActiveSheet {
@@ -58,7 +59,8 @@ enum class ActiveSheet {
     PARTICIPANTS,
     HOST_CONTROLS,
     MORE_OPTIONS,
-    DIAGNOSTICS
+    DIAGNOSTICS,
+    NOTES
 }
 
 class MeetingActiveViewModel(
@@ -270,6 +272,10 @@ class MeetingActiveViewModel(
         viewModelScope.launch {
             meetingRepository.respondJoinRequest(meetingId, requestId, admit = false)
         }
+    }
+
+    fun onNotesChanged(notes: String) {
+        _uiState.value = _uiState.value.copy(meetingNotes = notes)
     }
 
     fun leaveMeeting() {

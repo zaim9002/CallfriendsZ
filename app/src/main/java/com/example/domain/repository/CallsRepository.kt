@@ -11,6 +11,9 @@ interface CallsRepository {
     suspend fun addCallRecord(record: CallRecord)
     suspend fun clearHistory()
     suspend fun searchContacts(query: String): Resource<List<ContactUser>>
+    fun getAllContacts(): Flow<List<ContactUser>>
+    suspend fun addContact(contact: ContactUser)
+    suspend fun deleteContact(id: String)
 }
 
 interface ScheduledMeetingRepository {

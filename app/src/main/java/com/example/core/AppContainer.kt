@@ -15,9 +15,10 @@ class AppContainer(context: Context) {
     private val database = CallfriendsZDatabase.getDatabase(context)
 
     val meetingRepository: MeetingRepository = MeetingRepositoryImpl(database.meetingDao())
-    val callsRepository: CallsRepository = CallsRepositoryImpl(database.callHistoryDao())
+    val callsRepository: CallsRepository = CallsRepositoryImpl(database.callHistoryDao(), database.contactDao())
     val scheduledMeetingRepository: ScheduledMeetingRepository = ScheduledMeetingRepositoryImpl(database.scheduledMeetingDao())
     val meetingClient: MeetingClient = DefaultMeetingClient(context)
+    val meetingNoteDao = database.meetingNoteDao()
 
     companion object {
         @Volatile

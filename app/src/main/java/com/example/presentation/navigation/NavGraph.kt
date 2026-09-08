@@ -33,10 +33,15 @@ fun NavGraph(
     val navController = rememberNavController()
     val context = LocalContext.current
 
+    val isLoggedIn = UserSession.currentUser.value != null
     val startDestination = if (initialMeetingId != null) {
-        Screen.MeetingActive.createRoute(initialMeetingId)
+        if (isLoggedIn) {
+            Screen.MeetingActive.createRoute(initialMeetingId)
+        } else {
+            Screen.Auth.route
+        }
     } else {
-        Screen.Main.route
+        if (isLoggedIn) Screen.Main.route else Screen.Splash.route
     }
 
     NavHost(
@@ -47,8 +52,8 @@ fun NavGraph(
         composable(Screen.Splash.route) {
             SplashScreen(
                 onSplashFinished = {
-                    val isLoggedIn = UserSession.currentUser.value != null
-                    val target = if (isLoggedIn) Screen.Main.route else Screen.Auth.route
+                    val currentAuth = UserSession.currentUser.value != null
+                    val target = if (currentAuth) Screen.Main.route else Screen.Auth.route
                     navController.navigate(target) {
                         popUpTo(Screen.Splash.route) { inclusive = true }
                     }
@@ -61,8 +66,14 @@ fun NavGraph(
             val authViewModel = remember { AuthViewModel() }
             AuthScreen(
                 viewModel = authViewModel,
+                pendingMeetingId = initialMeetingId,
                 onAuthSuccess = {
-                    navController.navigate(Screen.Main.route) {
+                    val dest = if (!initialMeetingId.isNullOrBlank()) {
+                        Screen.MeetingActive.createRoute(initialMeetingId)
+                    } else {
+                        Screen.Main.route
+                    }
+                    navController.navigate(dest) {
                         popUpTo(Screen.Auth.route) { inclusive = true }
                     }
                 }

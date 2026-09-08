@@ -43,3 +43,23 @@ data class ScheduledMeetingEntity(
     val repeatRule: String,
     val reminderMinutes: Int
 )
+
+@Entity(tableName = "contacts")
+data class ContactEntity(
+    @PrimaryKey val id: String,
+    val name: String,
+    val email: String,
+    val phoneOrNote: String = "",
+    val isOnline: Boolean = true,
+    val statusText: String = "Available"
+)
+
+@Entity(tableName = "meeting_notes")
+data class MeetingNoteEntity(
+    @PrimaryKey val id: String,
+    val meetingId: String,
+    val meetingTitle: String,
+    val content: String,
+    val createdAt: Long = System.currentTimeMillis()
+)
+

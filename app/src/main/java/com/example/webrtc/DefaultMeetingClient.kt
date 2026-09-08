@@ -110,7 +110,7 @@ class DefaultMeetingClient(
 
         applyAudioRoute(initialAudioRoute)
 
-        // Initialize local participant and sample peers for rich meeting simulation
+        // Initialize real local participant
         val localUser = Participant(
             id = userId,
             displayName = "$userName (You)",
@@ -124,37 +124,11 @@ class DefaultMeetingClient(
             connectionQuality = "Excellent"
         )
 
-        val peers = listOf(
-            Participant(
-                id = "peer_sami",
-                displayName = "Sami Al-Otaibi",
-                role = ParticipantRole.CO_HOST,
-                isAudioEnabled = true,
-                isVideoEnabled = true,
-                isScreenSharing = false,
-                isSpeaking = true,
-                isHandRaised = false,
-                connectionQuality = "Excellent"
-            ),
-            Participant(
-                id = "peer_nour",
-                displayName = "Nour Al-Hassan",
-                role = ParticipantRole.PARTICIPANT,
-                isAudioEnabled = false,
-                isVideoEnabled = true,
-                isScreenSharing = false,
-                isSpeaking = false,
-                isHandRaised = true,
-                connectionQuality = "Good"
-            )
-        )
-
-        _participants.value = listOf(localUser) + peers
+        _participants.value = listOf(localUser)
         _connectionState.value = NetworkQuality.EXCELLENT
 
         startAudioLevelPolling()
         startStatsMonitor()
-        startPeerInteractionLoop()
     }
 
     override fun toggleMic() {
@@ -288,20 +262,6 @@ class DefaultMeetingClient(
                     bitrateKbps = if (_mediaState.value.isScreenSharing) 2400 else 1280,
                     quality = NetworkQuality.EXCELLENT
                 )
-            }
-        }
-    }
-
-    private fun startPeerInteractionLoop() {
-        simulationTimerJob?.cancel()
-        simulationTimerJob = scope.launch {
-            val peerNames = listOf("Sami Al-Otaibi", "Nour Al-Hassan")
-            val sampleEmojis = listOf("👍", "👏", "❤️", "🎉")
-            while (isActive) {
-                delay(14000)
-                val randomPeer = peerNames.random()
-                val randomEmoji = sampleEmojis.random()
-                _incomingReactions.emit(Pair(randomPeer, randomEmoji))
             }
         }
     }

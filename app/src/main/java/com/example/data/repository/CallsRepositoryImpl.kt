@@ -2,8 +2,10 @@ package com.example.data.repository
 
 import com.example.core.Resource
 import com.example.database.dao.CallHistoryDao
+import com.example.database.dao.ContactDao
 import com.example.database.dao.ScheduledMeetingDao
 import com.example.database.entity.CallHistoryEntity
+import com.example.database.entity.ContactEntity
 import com.example.database.entity.ScheduledMeetingEntity
 import com.example.domain.model.CallDirection
 import com.example.domain.model.CallMedium
@@ -16,24 +18,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class CallsRepositoryImpl(
-    private val callHistoryDao: CallHistoryDao
+    private val callHistoryDao: CallHistoryDao,
+    private val contactDao: ContactDao
 ) : CallsRepository {
-
-    private val sampleContacts = listOf(
-        ContactUser("u1", "Zaid Al-Harbi", "zaid.harbi@callfriendsz.app", isOnline = true, statusText = "Available for meetings"),
-        ContactUser("u2", "Mariam Al-Khalidi", "mariam.k@callfriendsz.app", isOnline = true, statusText = "In a call"),
-        ContactUser("u3", "Omar Farooq", "omar.f@callfriendsz.app", isOnline = false, statusText = "Away"),
-        ContactUser("u4", "Lina Qasim", "lina.q@callfriendsz.app", isOnline = true, statusText = "Ready to connect"),
-        ContactUser("u5", "Khaled Mansour", "khaled.m@callfriendsz.app", isOnline = false, statusText = "Offline")
-    )
 
     override fun getCallHistory(): Flow<List<CallRecord>> {
         return callHistoryDao.getAllCallHistory().map { list ->
-            if (list.isEmpty()) {
-                getDefaultCallHistory()
-            } else {
-                list.map { it.toDomain() }
-            }
+            list.map { it.toDomain() }
         }
     }
 
@@ -45,44 +36,49 @@ class CallsRepositoryImpl(
         callHistoryDao.clearAll()
     }
 
-    override suspend fun searchContacts(query: String): Resource<List<ContactUser>> {
-        val trimmed = query.trim().lowercase()
-        return if (trimmed.isBlank()) {
-            Resource.Success(sampleContacts)
-        } else {
-            Resource.Success(
-                sampleContacts.filter {
-                    it.name.lowercase().contains(trimmed) || it.email.lowercase().contains(trimmed)
-                }
-            )
+    override fun getAllContacts(): Flow<List<ContactUser>> {
+        return contactDao.getAllContacts().map { list ->
+            list.map { it.toDomain() }
         }
     }
 
-    private fun getDefaultCallHistory(): List<CallRecord> = listOf(
-        CallRecord(
-            id = "c1",
-            peerName = "Zaid Al-Harbi",
-            direction = CallDirection.INCOMING,
-            medium = CallMedium.VIDEO,
-            timestamp = System.currentTimeMillis() - 7200000L,
-            durationSeconds = 840
-        ),
-        CallRecord(
-            id = "c2",
-            peerName = "Mariam Al-Khalidi",
-            direction = CallDirection.OUTGOING,
-            medium = CallMedium.AUDIO,
-            timestamp = System.currentTimeMillis() - 86400000L,
-            durationSeconds = 420
-        ),
-        CallRecord(
-            id = "c3",
-            peerName = "Omar Farooq",
-            direction = CallDirection.MISSED,
-            medium = CallMedium.VIDEO,
-            timestamp = System.currentTimeMillis() - 172800000L,
-            durationSeconds = 0
-        )
+    override suspend fun addContact(contact: ContactUser) {
+        contactDao.insertContact(contact.toEntity())
+    }
+
+    override suspend fun deleteContact(id: String) {
+        contactDao.deleteContact(id)
+    }
+
+    override suspend fun searchContacts(query: String): Resource<List<ContactUser>> {
+        val trimmed = query.trim()
+        return try {
+            val results = if (trimmed.isBlank()) {
+                contactDao.searchContacts("")
+            } else {
+                contactDao.searchContacts(trimmed)
+            }
+            Resource.Success(results.map { it.toDomain() })
+        } catch (e: Exception) {
+            Resource.Error(e.message ?: "Failed to search contacts")
+        }
+    }
+
+    private fun ContactEntity.toDomain() = ContactUser(
+        id = id,
+        name = name,
+        email = email,
+        isOnline = isOnline,
+        statusText = if (phoneOrNote.isNotBlank()) phoneOrNote else statusText
+    )
+
+    private fun ContactUser.toEntity() = ContactEntity(
+        id = id,
+        name = name,
+        email = email,
+        phoneOrNote = statusText,
+        isOnline = isOnline,
+        statusText = statusText
     )
 
     private fun CallRecord.toEntity() = CallHistoryEntity(
@@ -112,11 +108,7 @@ class ScheduledMeetingRepositoryImpl(
 
     override fun getScheduledMeetings(): Flow<List<ScheduledMeeting>> {
         return scheduledMeetingDao.getScheduledMeetings().map { list ->
-            if (list.isEmpty()) {
-                getDefaultScheduled()
-            } else {
-                list.map { it.toDomain() }
-            }
+            list.map { it.toDomain() }
         }
     }
 
@@ -129,31 +121,6 @@ class ScheduledMeetingRepositoryImpl(
         scheduledMeetingDao.deleteScheduledMeeting(id)
         return Resource.Success(Unit)
     }
-
-    private fun getDefaultScheduled(): List<ScheduledMeeting> = listOf(
-        ScheduledMeeting(
-            id = "sch_1",
-            title = "Design System & UI Architecture Review",
-            description = "Reviewing Compose M3 dark mode tokens and WebRTC widgets",
-            dateString = "Today",
-            startTime = "04:30 PM",
-            endTime = "05:30 PM",
-            hostName = "Sarah Jenkins",
-            repeatRule = "Weekly",
-            reminderMinutes = 10
-        ),
-        ScheduledMeeting(
-            id = "sch_2",
-            title = "Core SFU & Backend Sync",
-            description = "Infrastructure latency and TURN allocation benchmark",
-            dateString = "Tomorrow",
-            startTime = "11:00 AM",
-            endTime = "12:00 PM",
-            hostName = "Zaid Al-Harbi",
-            repeatRule = "Daily",
-            reminderMinutes = 15
-        )
-    )
 
     private fun ScheduledMeeting.toEntity() = ScheduledMeetingEntity(
         id = id,
